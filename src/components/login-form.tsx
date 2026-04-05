@@ -13,12 +13,25 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
+import { Link } from "react-router";
 import { Input } from "@/components/ui/input";
+import PasswordInput from "@/components/PasswordInput";
+import { AuthContext } from "@/hooks/auth/authContext";
+import { useContext } from "react";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const authContext = useContext(AuthContext);
+  const handleLogin = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    authContext?.logIn?.({ email, password });
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -29,12 +42,13 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleLogin}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
@@ -50,12 +64,12 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <PasswordInput id="password" name="password" required />
               </Field>
               <Field>
                 <Button type="submit">Login</Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <a href="#">Sign up</a>
+                  Don&apos;t have an account? <Link to="/signup">Sign up</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
