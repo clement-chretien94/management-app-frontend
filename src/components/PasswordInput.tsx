@@ -21,17 +21,17 @@ export default function PasswordInput({
         name={name}
         type={showPassword ? "text" : "password"}
         required={required}
-        className={cn("pr-12", className)}
+        className={cn("pr-8", className)}
       />
       {showPassword ? (
-        <Eye
+        <EyeClosed
           width={20}
           height={20}
           onClick={toggleShowPassword}
           className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer"
         />
       ) : (
-        <EyeClosed
+        <Eye
           width={20}
           height={20}
           onClick={toggleShowPassword}
