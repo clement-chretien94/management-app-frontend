@@ -1,9 +1,8 @@
-import { getTimeBlocks } from "@/services/timeblock";
 import DailyCalendar from "@/components/DailyCalendar";
 import TimeBlockCalendar from "@/components/TimeBlockCalendar";
 import WeeklyCalendar from "@/components/WeeklyCalendar";
 import type { TimeBlock } from "@/types";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   addDays,
   addWeeks,
@@ -13,22 +12,13 @@ import {
   subWeeks,
 } from "date-fns";
 
-export default function TimeBlocksPanel() {
-  const [timeBlocks, setTimeBlocks] = useState<TimeBlock[]>([]);
+interface TimeBlocksPanelProps {
+  timeBlocks: TimeBlock[];
+}
+
+export default function TimeBlocksPanel({ timeBlocks }: TimeBlocksPanelProps) {
   const [calendarMode, setCalendarMode] = useState<"daily" | "weekly">("daily");
   const [activeDate, setActiveDate] = useState(new Date());
-
-  useEffect(() => {
-    const fetchTimeBlocks = async () => {
-      try {
-        const blocks = await getTimeBlocks();
-        setTimeBlocks(blocks);
-      } catch (error) {
-        console.error("Error fetching time blocks:", error);
-      }
-    };
-    fetchTimeBlocks();
-  }, []);
 
   const filteredBlocks = useMemo(() => {
     const dayStart = new Date(activeDate);

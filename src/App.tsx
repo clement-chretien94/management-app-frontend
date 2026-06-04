@@ -5,6 +5,7 @@ import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import { AuthContext } from "./hooks/auth/authContext";
 import { useContext } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 function NoAuth() {
   const authContext = useContext(AuthContext);
@@ -26,19 +27,22 @@ function RequireAuth() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route element={<NoAuth />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Route>
-          <Route element={<RequireAuth />}>
-            <Route path="/" element={<Home />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    <>
+      <Toaster richColors position="top-center" />
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route element={<NoAuth />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="/" element={<Home />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </>
   );
 }
 
