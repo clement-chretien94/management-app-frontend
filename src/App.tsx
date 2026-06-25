@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router";
 import { AuthProvider } from "./hooks/auth/authProvider";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Home from "./pages/Home";
+import Login from "@/pages/Login";
+import Signup from "@/pages/Signup";
+import Home from "@/pages/Home";
+import Layout from "@/pages/Layout";
 import { AuthContext } from "./hooks/auth/authContext";
 import { useContext } from "react";
 import { Toaster } from "@/components/ui/sonner";
@@ -37,7 +38,9 @@ function App() {
               <Route path="/signup" element={<Signup />} />
             </Route>
             <Route element={<RequireAuth />}>
-              <Route path="/" element={<Home />} />
+              <Route element={<Layout />}>
+                <Route path="/" element={<Home />} />
+              </Route>
             </Route>
           </Routes>
         </AuthProvider>

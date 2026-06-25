@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { getTimeBlocks, lockTimeBlocks } from "@/services/timeblock";
 import type { TimeBlock } from "@/types";
 import { Lock } from "lucide-react";
+import EditTimeBlockAlert from "@/components/EditTimeBlockAlert";
 
 export default function Home() {
   const authContext = useContext(AuthContext);
@@ -48,17 +49,17 @@ export default function Home() {
     .every((block) => block.isLocked);
 
   return (
-    <div className="flex min-h-screen flex-col items-stretch gap-6 bg-background px-6 py-6">
+    <div className="flex min-h-full flex-col items-stretch gap-6 bg-background px-6 py-6">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-3xl font-bold">
           Welcome, {authContext?.user?.firstName}!
         </h1>
         <div className="flex gap-3">
+          <EditTimeBlockAlert created />
           <Button onClick={handleLockSchedule} disabled={isTomorrowLocked}>
             <Lock className="h-4 w-4" />
             Lock Tomorrow's Schedule
           </Button>
-          <Button onClick={() => authContext?.logOut?.()}>Log Out</Button>
         </div>
       </header>
       <main className="flex w-full items-start gap-8">
