@@ -12,21 +12,7 @@ import {
 import { AuthContext } from "@/hooks/auth/authContext";
 import { House, Layers, Focus } from "lucide-react";
 import { useContext } from "react";
-
-const data = {
-  navMain: [
-    {
-      title: "Home",
-      url: "#",
-      icon: House,
-    },
-    {
-      title: "Categories",
-      url: "#",
-      icon: Layers,
-    },
-  ],
-};
+import { NavLink } from "react-router";
 
 export function AppSideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const authContext = useContext(AuthContext);
@@ -39,10 +25,10 @@ export function AppSideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              <a href="#">
+              <NavLink to="/">
                 <Focus className="size-5!" />
-                <span className="text-base font-semibold">FocusFlow</span>
-              </a>
+                FocusFlow
+              </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -51,14 +37,26 @@ export function AppSideBar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarGroupContent className="flex flex-col gap-2">
             <SidebarMenu>
-              {data.navMain.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton>
-                    {item.icon && <item.icon />}
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <SidebarMenuItem key="Home">
+                <NavLink to="/">
+                  {({ isActive }) => (
+                    <SidebarMenuButton isActive={isActive}>
+                      <House />
+                      <span>Home</span>
+                    </SidebarMenuButton>
+                  )}
+                </NavLink>
+              </SidebarMenuItem>
+              <SidebarMenuItem key="Categories">
+                <NavLink to="/categories">
+                  {({ isActive }) => (
+                    <SidebarMenuButton isActive={isActive}>
+                      <Layers />
+                      <span>Categories</span>
+                    </SidebarMenuButton>
+                  )}
+                </NavLink>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

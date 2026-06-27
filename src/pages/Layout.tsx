@@ -3,7 +3,7 @@ import { AppSideBar } from "@/components/AppSideBar";
 import { Outlet } from "react-router";
 import { SiteHeader } from "@/components/SiteHeader";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout() {
   return (
     <SidebarProvider
       style={

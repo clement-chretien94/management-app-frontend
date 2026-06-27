@@ -4,9 +4,13 @@ import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import Home from "@/pages/Home";
 import Layout from "@/pages/Layout";
-import { AuthContext } from "./hooks/auth/authContext";
+import { AuthContext } from "@/hooks/auth/authContext";
 import { useContext } from "react";
 import { Toaster } from "@/components/ui/sonner";
+import Categories from "@/pages/Catagories";
+import CategoryUpdate from "@/pages/CategoryUpdate";
+import CategoryDetails from "./pages/CategoryDetails";
+import CategoryCreate from "./pages/CategoryCreate";
 
 function NoAuth() {
   const authContext = useContext(AuthContext);
@@ -40,6 +44,13 @@ function App() {
             <Route element={<RequireAuth />}>
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/categories/create" element={<CategoryCreate />} />
+                <Route path="/categories/:id" element={<CategoryDetails />} />
+                <Route
+                  path="/categories/:id/edit"
+                  element={<CategoryUpdate />}
+                />
               </Route>
             </Route>
           </Routes>

@@ -56,6 +56,22 @@ export type MicroTaskUpdate = {
   isCompleted: boolean;
 };
 
+export type Category = {
+  id: string;
+  color: string;
+  title: string;
+};
+
+export type CategoryCreate = {
+  color: string;
+  title: string;
+};
+
+export type CategoryUpdate = {
+  color: string;
+  title: string;
+};
+
 /* Types related to calendar layout */
 
 export type LayoutBlock = {
