@@ -22,7 +22,7 @@ export default function TimeBlockCalendar({
   calendarMode,
   onCalendarModeChange,
   children,
-}: TimeBlockCalendarProps) {
+}: Readonly<TimeBlockCalendarProps>) {
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

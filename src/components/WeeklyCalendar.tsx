@@ -1,5 +1,5 @@
 import type { CalendarProps } from "@/types";
-import TimeBlockItem from "@/components/TimeBlockItem";
+import TimeBlockItemWithDetails from "@/components/TimeBlockItemWithDetails";
 import TimeGutter from "@/components/TimeGutter";
 import { buildLayoutForDay, MINUTE_HEIGHT } from "@/utils/calendarLayout";
 import { addDays, startOfWeek } from "date-fns";
@@ -9,8 +9,7 @@ export default function WeeklyCalendar({
   blocks,
   startHour = 6,
   endHour = 22,
-  onBlockClick,
-}: CalendarProps) {
+}: Readonly<CalendarProps>) {
   const weekStart = startOfWeek(date, { weekStartsOn: 1 });
   const weekDays = Array.from({ length: 7 }, (_, index) =>
     addDays(weekStart, index),
@@ -77,10 +76,9 @@ export default function WeeklyCalendar({
                     {layout.map((item) => {
                       const width = 100 / item.columnCount;
                       return (
-                        <TimeBlockItem
+                        <TimeBlockItemWithDetails
                           key={item.block.id}
-                          block={item.block}
-                          onClick={onBlockClick}
+                          timeBlock={item.block}
                           style={{
                             top: item.top,
                             height: item.height,

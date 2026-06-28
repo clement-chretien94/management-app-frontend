@@ -32,12 +32,15 @@ export type TimeBlock = {
   startTime: string; // ISO string
   endTime: string; // ISO string
   isLocked: boolean;
+  categoryId: string | null;
+  category?: Category;
 };
 
 export type TimeBlockCreate = {
   title: string;
   startTime: string; // ISO string
   endTime: string; // ISO string
+  categoryId: string | null;
 };
 
 export type MicroTask = {
@@ -89,5 +92,4 @@ export type CalendarProps = {
   blocks: TimeBlock[];
   startHour?: number;
   endHour?: number;
-  onBlockClick?: (block: TimeBlock) => void;
 };

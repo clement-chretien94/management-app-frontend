@@ -1,4 +1,5 @@
 import type { LayoutBlock, TimeBlock } from "@/types";
+import type { Duration } from "date-fns";
 
 export const MINUTE_HEIGHT = 2;
 
@@ -105,4 +106,40 @@ const getDayRange = (date: Date) => {
 
 const toMinutes = (date: Date, dayStart: Date) => {
   return Math.floor((date.getTime() - dayStart.getTime()) / 60000);
+};
+
+export const formatDate = (date: Date) => {
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+};
+
+export const formatWeek = (startOfWeek: Date, endOfWeek: Date) => {
+  return `${startOfWeek.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  })} - ${endOfWeek.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  })}`;
+};
+
+export const formatTimeLabel = (date: Date) => {
+  return date.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+};
+
+export const getDuration = (start: Date, end: Date) => {
+  const durationMs = end.getTime() - start.getTime();
+  const minutes = Math.floor(durationMs / 60000);
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  return { hours, minutes: remainingMinutes } as Duration;
 };

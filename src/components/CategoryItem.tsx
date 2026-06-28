@@ -1,4 +1,5 @@
 import type { Category } from "@/types";
+import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export default function CategoryItem({
@@ -8,18 +9,23 @@ export default function CategoryItem({
   return (
     <div
       key={category.id}
-      className="bg-card text-card-foreground p-4 rounded-lg shadow cursor-pointer"
-      onClick={() => {
-        navigate(`/categories/${category.id}`);
-      }}
+      className="bg-card text-card-foreground rounded-xl border cursor-pointer hover:bg-accent/50 transition-all duration-150 flex items-center overflow-hidden"
+      onClick={() => navigate(`/categories/${category.id}`)}
     >
-      <h2 className="text-xl font-semibold">{category.title}</h2>
-      <div className="flex items-center gap-2 mt-1">
+      <div className="flex items-center gap-4 p-5 flex-1 min-w-0">
         <div
-          className="h-4 w-4 rounded-full shrink-0"
+          className="h-10 w-10 rounded-full shrink-0 shadow-sm"
           style={{ backgroundColor: category.color }}
         />
-        <p className="text-muted-foreground">{category.color}</p>
+        <div className="min-w-0">
+          <h2 className="text-lg font-semibold leading-tight">
+            {category.title}
+          </h2>
+          <p className="text-muted-foreground text-sm mt-0.5">
+            {category.color}
+          </p>
+        </div>
+        <ChevronRight className="ml-auto h-5 w-5 text-muted-foreground shrink-0" />
       </div>
     </div>
   );

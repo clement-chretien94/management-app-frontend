@@ -1,6 +1,7 @@
 import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useRef, useState } from "react";
 import { startOfWeek, endOfWeek } from "date-fns";
+import { formatDate, formatWeek } from "@/utils/calendarLayout";
 
 type CalendarInputProps = {
   calendarMode: "daily" | "weekly";
@@ -12,7 +13,7 @@ export default function CalendarInput({
   calendarMode,
   date,
   onDateChange,
-}: CalendarInputProps) {
+}: Readonly<CalendarInputProps>) {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const calendarRef = useRef<HTMLDivElement | null>(null);
 
@@ -32,19 +33,11 @@ export default function CalendarInput({
 
   const dateText =
     calendarMode === "daily"
-      ? date.toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        })
-      : `${startOfWeek(date, { weekStartsOn: 1 }).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        })} - ${endOfWeek(date, { weekStartsOn: 1 }).toLocaleDateString(
-          "en-US",
-          { month: "short", day: "numeric", year: "numeric" },
-        )}`;
+      ? formatDate(date)
+      : formatWeek(
+          startOfWeek(date, { weekStartsOn: 1 }),
+          endOfWeek(date, { weekStartsOn: 1 }),
+        );
 
   return (
     <div className="relative" ref={calendarRef}>

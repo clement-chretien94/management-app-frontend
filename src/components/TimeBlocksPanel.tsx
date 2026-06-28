@@ -68,17 +68,9 @@ export default function TimeBlocksPanel({ timeBlocks }: TimeBlocksPanelProps) {
         onCalendarModeChange={setCalendarMode}
       >
         {calendarMode === "daily" ? (
-          <DailyCalendar
-            date={activeDate}
-            blocks={filteredBlocks}
-            onBlockClick={(block) => console.log("Selected time block:", block)}
-          />
+          <DailyCalendar date={activeDate} blocks={filteredBlocks} />
         ) : (
-          <WeeklyCalendar
-            date={activeDate}
-            blocks={filteredBlocks}
-            onBlockClick={(block) => console.log("Selected time block:", block)}
-          />
+          <WeeklyCalendar date={activeDate} blocks={filteredBlocks} />
         )}
       </TimeBlockCalendar>
     </div>

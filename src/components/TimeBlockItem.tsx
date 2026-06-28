@@ -1,34 +1,41 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ComponentPropsWithoutRef } from "react";
 import type { TimeBlock } from "@/types";
+import { formatTimeLabel } from "@/utils/calendarLayout";
 import { Lock } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const formatTimeLabel = (date: Date) => {
-  return date.toLocaleTimeString([], {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-};
+interface TimeBlockItemProps extends ComponentPropsWithoutRef<"button"> {
+  block: TimeBlock;
+  style: CSSProperties;
+}
 
 export default function TimeBlockItem({
   block,
   style,
-  onClick,
-}: {
-  block: TimeBlock;
-  style: CSSProperties;
-  onClick?: (block: TimeBlock) => void;
-}) {
+  className,
+  ...props
+}: Readonly<TimeBlockItemProps>) {
   const startTime = new Date(block.startTime);
   const endTime = new Date(block.endTime);
 
   return (
     <button
       type="button"
-      className={
-        "absolute rounded-lg border border-primary/20 bg-primary/10 p-2 text-left text-xs text-foreground shadow-sm transition"
+      {...props}
+      className={cn(
+        "absolute cursor-pointer rounded-lg border p-2 text-left text-xs text-foreground shadow-sm transition",
+        !block.category?.color && "border-primary/20 bg-primary/10",
+        className,
+      )}
+      style={
+        block.category?.color
+          ? {
+              ...style,
+              backgroundColor: block.category.color + "33",
+              borderColor: block.category.color + "66",
+            }
+          : style
       }
-      style={style}
-      onClick={() => onClick?.(block)}
     >
       <div className="flex items-center justify-between gap-2">
         <span className="font-semibold line-clamp-1">{block.title}</span>

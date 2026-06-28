@@ -38,8 +38,8 @@ export default function CategoryUpdateCreateForm({
   };
 
   return (
-    <div className="bg-card text-card-foreground rounded-xl border p-6 shadow-sm max-w-lg">
-      <form onSubmit={handleCreateUpdate} className="flex flex-col gap-6">
+    <div className="bg-card text-card-foreground rounded-xl border shadow-sm overflow-hidden">
+      <form onSubmit={handleCreateUpdate} className="flex flex-col gap-6 p-6">
         <div className="flex flex-col gap-2">
           <Label htmlFor="title">Title</Label>
           <Input
@@ -52,17 +52,28 @@ export default function CategoryUpdateCreateForm({
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <Label htmlFor="color">Color</Label>
-          <input
-            id="color"
-            name="color"
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            required
-            className="h-10 w-10 cursor-pointer rounded-md border border-input bg-transparent p-0.5 shadow-sm transition-colors"
-          />
+          <div className="flex items-center gap-4">
+            <input
+              id="color"
+              name="color"
+              type="color"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+              required
+              className="h-10 w-10 cursor-pointer rounded-md border border-input bg-transparent p-0.5 shadow-sm transition-colors"
+            />
+            <div className="flex items-center gap-2">
+              <div
+                className="h-6 w-6 rounded-full shrink-0 shadow-sm border border-border"
+                style={{ backgroundColor: color }}
+              />
+              <span className="text-sm text-muted-foreground font-mono">
+                {color}
+              </span>
+            </div>
+          </div>
         </div>
 
         <div className="flex gap-3 pt-2">

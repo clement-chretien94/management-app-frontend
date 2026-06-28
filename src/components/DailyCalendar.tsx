@@ -1,5 +1,5 @@
 import type { CalendarProps } from "@/types";
-import TimeBlockItem from "@/components/TimeBlockItem";
+import TimeBlockItemWithDetails from "@/components/TimeBlockItemWithDetails";
 import TimeGutter from "@/components/TimeGutter";
 import { buildLayoutForDay, MINUTE_HEIGHT } from "@/utils/calendarLayout";
 
@@ -8,8 +8,7 @@ export default function DailyCalendar({
   blocks,
   startHour = 6,
   endHour = 22,
-  onBlockClick,
-}: CalendarProps) {
+}: Readonly<CalendarProps>) {
   const { layout, startMinutes, endMinutes } = buildLayoutForDay(
     date,
     blocks,
@@ -41,10 +40,9 @@ export default function DailyCalendar({
             {layout.map((item) => {
               const width = 100 / item.columnCount;
               return (
-                <TimeBlockItem
+                <TimeBlockItemWithDetails
                   key={item.block.id}
-                  block={item.block}
-                  onClick={onBlockClick}
+                  timeBlock={item.block}
                   style={{
                     top: item.top,
                     height: item.height,
