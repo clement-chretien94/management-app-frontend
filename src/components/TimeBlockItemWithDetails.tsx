@@ -10,7 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import type { TimeBlock } from "@/types";
-import { Clock, Lock, LockOpen, Tag } from "lucide-react";
+import { Clock, Lock, LockOpen, Tag, X } from "lucide-react";
 import type { CSSProperties } from "react";
 import TimeBlockItem from "@/components/TimeBlockItem";
 import {
@@ -50,9 +50,17 @@ export default function TimeBlockItemWithDetails({
           {timeBlock.title} — {formatDate(startTime)},{" "}
           {formatTimeLabel(startTime)} to {formatTimeLabel(endTime)}
         </AlertDialogDescription>
+        <AlertDialogCancel
+          variant="ghost"
+          size="icon"
+          className="absolute top-3 right-3 h-7 w-7 rounded-full border-none shadow-none"
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </AlertDialogCancel>
         <div className="px-6 pt-4 pb-6 space-y-5">
           <AlertDialogHeader className="space-y-1">
-            <AlertDialogTitle className="text-lg font-semibold leading-tight">
+            <AlertDialogTitle className="text-lg font-semibold leading-tight pr-6">
               {timeBlock.title}
             </AlertDialogTitle>
             <p className="text-sm text-muted-foreground">
@@ -107,17 +115,19 @@ export default function TimeBlockItemWithDetails({
             </div>
           </div>
 
-          <AlertDialogFooter className="pt-2">
+          <AlertDialogFooter className="pt-2 sm:grid sm:grid-cols-2">
             <AlertDialogAction
               onClick={() => navigate(`/timeblocks/${timeBlock.id}/edit`)}
-              className="w-1/3"
             >
               Edit
             </AlertDialogAction>
             <AlertDialogAction asChild>
-              <DeleteTimeBlockAlert title={timeBlock.title} id={timeBlock.id} onDelete={onDeleteTimeBlock} />
+              <DeleteTimeBlockAlert
+                title={timeBlock.title}
+                id={timeBlock.id}
+                onDelete={onDeleteTimeBlock}
+              />
             </AlertDialogAction>
-            <AlertDialogCancel className="w-1/3">Close</AlertDialogCancel>
           </AlertDialogFooter>
         </div>
       </AlertDialogContent>

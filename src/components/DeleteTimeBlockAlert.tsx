@@ -35,7 +35,7 @@ export default function DeleteTimeBlockAlert({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="w-1/3" variant="destructive">
+        <Button className="w-full" variant="destructive">
           Delete
         </Button>
       </AlertDialogTrigger>

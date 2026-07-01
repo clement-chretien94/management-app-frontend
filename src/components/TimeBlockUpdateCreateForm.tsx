@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -8,6 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { SelectCategory } from "@/components/SelectCategory";
 import { DatePickerTime } from "./DatePickerTime";
+import { CalendarClock, Clock, Lock, Tag } from "lucide-react";
 
 interface TimeBlockUpdateCreateFormProps {
   timeBlock?: TimeBlock;
@@ -71,63 +73,83 @@ export default function TimeBlockUpdateCreateForm({
   };
 
   return (
-    <div className="bg-card text-card-foreground rounded-xl border shadow-sm overflow-hidden">
-      <form onSubmit={handleCreateUpdate} className="flex flex-col gap-6 p-6">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="title">Title</Label>
-          <Input
-            id="title"
-            name="title"
-            type="text"
-            placeholder="Category title"
-            defaultValue={timeBlock?.title || ""}
-            required
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="startTime">Start Time</Label>
-          <DatePickerTime
-            date={startTime || new Date()}
-            onDateChange={setStartTime}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="endTime">End Time</Label>
-          <DatePickerTime
-            date={endTime || new Date()}
-            onDateChange={setEndTime}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="category">Category</Label>
-          <SelectCategory
-            {...(timeBlock?.categoryId && {
-              defaultValue: timeBlock.categoryId,
-            })}
-            selectedCategoryId={setSelectedCategoryId}
-          />
-        </div>
-
-        {timeBlock && (
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="isLocked"
-              name="isLocked"
-              defaultChecked={timeBlock.isLocked}
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-xl">
+          <CalendarClock className="h-5 w-5 text-muted-foreground" />
+          {timeBlock ? "Time Block Details" : "New Time Block"}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleCreateUpdate} className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="title">Title</Label>
+            <Input
+              id="title"
+              name="title"
+              type="text"
+              placeholder="Category title"
+              defaultValue={timeBlock?.title || ""}
+              required
             />
-            <Label htmlFor="isLocked">Is Locked</Label>
           </div>
-        )}
 
-        <div className="flex gap-3 pt-2">
-          <Button type="submit" className="flex-1">
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="startTime">
+                <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                Start Time
+              </Label>
+              <DatePickerTime
+                date={startTime || new Date()}
+                onDateChange={setStartTime}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="endTime">
+                <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                End Time
+              </Label>
+              <DatePickerTime
+                date={endTime || new Date()}
+                onDateChange={setEndTime}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="category">
+              <Tag className="h-3.5 w-3.5 text-muted-foreground" />
+              Category
+            </Label>
+            <SelectCategory
+              {...(timeBlock?.categoryId && {
+                defaultValue: timeBlock.categoryId,
+              })}
+              selectedCategoryId={setSelectedCategoryId}
+            />
+          </div>
+
+          {timeBlock && (
+            <div className="flex items-center justify-between rounded-lg border px-4 py-3">
+              <Label htmlFor="isLocked" className="cursor-pointer">
+                <Lock className="h-4 w-4 text-muted-foreground" />
+                Lock this time block
+              </Label>
+              <Switch
+                id="isLocked"
+                name="isLocked"
+                defaultChecked={timeBlock.isLocked}
+              />
+            </div>
+          )}
+
+          <Button type="submit" className="w-full">
             {timeBlock ? "Update" : "Create"}
           </Button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

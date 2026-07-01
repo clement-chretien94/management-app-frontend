@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createCategory, updateCategory } from "@/services/categories";
 import type { Category } from "@/types";
+import { Tag } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -38,50 +40,56 @@ export default function CategoryUpdateCreateForm({
   };
 
   return (
-    <div className="bg-card text-card-foreground rounded-xl border shadow-sm overflow-hidden">
-      <form onSubmit={handleCreateUpdate} className="flex flex-col gap-6 p-6">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="title">Title</Label>
-          <Input
-            id="title"
-            name="title"
-            type="text"
-            placeholder="Category title"
-            defaultValue={category?.title || ""}
-            required
-          />
-        </div>
-
-        <div className="flex flex-col gap-3">
-          <Label htmlFor="color">Color</Label>
-          <div className="flex items-center gap-4">
-            <input
-              id="color"
-              name="color"
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-xl">
+          <Tag className="h-5 w-5 text-muted-foreground" />
+          {category ? "Category Details" : "New Category"}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleCreateUpdate} className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="title">Title</Label>
+            <Input
+              id="title"
+              name="title"
+              type="text"
+              placeholder="Category title"
+              defaultValue={category?.title || ""}
               required
-              className="h-10 w-10 cursor-pointer rounded-md border border-input bg-transparent p-0.5 shadow-sm transition-colors"
             />
-            <div className="flex items-center gap-2">
-              <div
-                className="h-6 w-6 rounded-full shrink-0 shadow-sm border border-border"
-                style={{ backgroundColor: color }}
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <Label htmlFor="color">Color</Label>
+            <div className="flex items-center gap-4">
+              <input
+                id="color"
+                name="color"
+                type="color"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                required
+                className="h-10 w-10 cursor-pointer rounded-md border border-input bg-transparent p-0.5 shadow-xs transition-colors"
               />
-              <span className="text-sm text-muted-foreground font-mono">
-                {color}
-              </span>
+              <div className="flex items-center gap-2">
+                <div
+                  className="h-6 w-6 rounded-full shrink-0 shadow-xs border border-border"
+                  style={{ backgroundColor: color }}
+                />
+                <span className="text-sm text-muted-foreground font-mono">
+                  {color}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex gap-3 pt-2">
-          <Button type="submit" className="flex-1">
+          <Button type="submit" className="w-full">
             {category ? "Update" : "Create"}
           </Button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
