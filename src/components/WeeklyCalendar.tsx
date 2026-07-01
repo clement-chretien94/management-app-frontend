@@ -9,6 +9,7 @@ export default function WeeklyCalendar({
   blocks,
   startHour = 6,
   endHour = 22,
+  onDeleteTimeBlock,
 }: Readonly<CalendarProps>) {
   const weekStart = startOfWeek(date, { weekStartsOn: 1 });
   const weekDays = Array.from({ length: 7 }, (_, index) =>
@@ -79,6 +80,7 @@ export default function WeeklyCalendar({
                         <TimeBlockItemWithDetails
                           key={item.block.id}
                           timeBlock={item.block}
+                          onDeleteTimeBlock={onDeleteTimeBlock}
                           style={{
                             top: item.top,
                             height: item.height,

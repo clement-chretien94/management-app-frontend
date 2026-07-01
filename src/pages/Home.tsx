@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { getTimeBlocks, lockTimeBlocks } from "@/services/timeblock";
 import type { TimeBlock } from "@/types";
 import { Lock } from "lucide-react";
-import EditTimeBlockAlert from "@/components/EditTimeBlockAlert";
+import { Link } from "react-router";
 
 export default function Home() {
   const authContext = useContext(AuthContext);
@@ -55,7 +55,9 @@ export default function Home() {
           Welcome, {authContext?.user?.firstName}!
         </h1>
         <div className="flex gap-3">
-          <EditTimeBlockAlert created />
+          <Button asChild>
+            <Link to="/timeblocks/create">Add Time Block</Link>
+          </Button>
           <Button onClick={handleLockSchedule} disabled={isTomorrowLocked}>
             <Lock className="h-4 w-4" />
             Lock Tomorrow's Schedule
@@ -63,7 +65,7 @@ export default function Home() {
         </div>
       </header>
       <main className="flex w-full items-start gap-8">
-        <TimeBlocksPanel timeBlocks={timeBlocks} />
+        <TimeBlocksPanel timeBlocks={timeBlocks} onDeleteTimeBlock={loadTimeBlocks} />
         <MicroTasksPanel />
       </main>
     </div>

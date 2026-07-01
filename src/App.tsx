@@ -11,6 +11,8 @@ import Categories from "@/pages/Catagories";
 import CategoryUpdate from "@/pages/CategoryUpdate";
 import CategoryDetails from "./pages/CategoryDetails";
 import CategoryCreate from "./pages/CategoryCreate";
+import TimeBlockUpdate from "./pages/TimeBlockUpdate";
+import TimeBlockCreate from "./pages/TimeBlockCreate";
 
 function NoAuth() {
   const authContext = useContext(AuthContext);
@@ -44,6 +46,14 @@ function App() {
             <Route element={<RequireAuth />}>
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
+                <Route
+                  path="/timeblocks/create"
+                  element={<TimeBlockCreate />}
+                />
+                <Route
+                  path="/timeblocks/:id/edit"
+                  element={<TimeBlockUpdate />}
+                />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/categories/create" element={<CategoryCreate />} />
                 <Route path="/categories/:id" element={<CategoryDetails />} />

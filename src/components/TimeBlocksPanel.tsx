@@ -14,9 +14,10 @@ import {
 
 interface TimeBlocksPanelProps {
   timeBlocks: TimeBlock[];
+  onDeleteTimeBlock: () => void;
 }
 
-export default function TimeBlocksPanel({ timeBlocks }: TimeBlocksPanelProps) {
+export default function TimeBlocksPanel({ timeBlocks, onDeleteTimeBlock }: Readonly<TimeBlocksPanelProps>) {
   const [calendarMode, setCalendarMode] = useState<"daily" | "weekly">("daily");
   const [activeDate, setActiveDate] = useState(new Date());
 
@@ -68,9 +69,9 @@ export default function TimeBlocksPanel({ timeBlocks }: TimeBlocksPanelProps) {
         onCalendarModeChange={setCalendarMode}
       >
         {calendarMode === "daily" ? (
-          <DailyCalendar date={activeDate} blocks={filteredBlocks} />
+          <DailyCalendar date={activeDate} blocks={filteredBlocks} onDeleteTimeBlock={onDeleteTimeBlock} />
         ) : (
-          <WeeklyCalendar date={activeDate} blocks={filteredBlocks} />
+          <WeeklyCalendar date={activeDate} blocks={filteredBlocks} onDeleteTimeBlock={onDeleteTimeBlock} />
         )}
       </TimeBlockCalendar>
     </div>

@@ -8,6 +8,7 @@ export default function DailyCalendar({
   blocks,
   startHour = 6,
   endHour = 22,
+  onDeleteTimeBlock,
 }: Readonly<CalendarProps>) {
   const { layout, startMinutes, endMinutes } = buildLayoutForDay(
     date,
@@ -43,6 +44,7 @@ export default function DailyCalendar({
                 <TimeBlockItemWithDetails
                   key={item.block.id}
                   timeBlock={item.block}
+                  onDeleteTimeBlock={onDeleteTimeBlock}
                   style={{
                     top: item.top,
                     height: item.height,

@@ -1,5 +1,6 @@
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -18,16 +19,22 @@ import {
   getDuration,
 } from "@/utils/calendarLayout";
 import { formatDuration } from "date-fns";
+import { useNavigate } from "react-router";
+import DeleteTimeBlockAlert from "./DeleteTimeBlockAlert";
 
 interface TimeBlockItemWithDetails {
   timeBlock: TimeBlock;
   style: CSSProperties;
+  onDeleteTimeBlock: () => void;
 }
 
 export default function TimeBlockItemWithDetails({
   timeBlock,
   style,
+  onDeleteTimeBlock,
 }: Readonly<TimeBlockItemWithDetails>) {
+  const navigate = useNavigate();
+
   const startTime = new Date(timeBlock.startTime);
   const endTime = new Date(timeBlock.endTime);
 
@@ -40,7 +47,8 @@ export default function TimeBlockItemWithDetails({
       </AlertDialogTrigger>
       <AlertDialogContent className="p-0 overflow-hidden max-w-sm">
         <AlertDialogDescription className="sr-only">
-          {timeBlock.title} — {formatDate(startTime)}, {formatTimeLabel(startTime)} to {formatTimeLabel(endTime)}
+          {timeBlock.title} — {formatDate(startTime)},{" "}
+          {formatTimeLabel(startTime)} to {formatTimeLabel(endTime)}
         </AlertDialogDescription>
         <div className="px-6 pt-4 pb-6 space-y-5">
           <AlertDialogHeader className="space-y-1">
@@ -100,7 +108,16 @@ export default function TimeBlockItemWithDetails({
           </div>
 
           <AlertDialogFooter className="pt-2">
-            <AlertDialogCancel className="w-full">Close</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => navigate(`/timeblocks/${timeBlock.id}/edit`)}
+              className="w-1/3"
+            >
+              Edit
+            </AlertDialogAction>
+            <AlertDialogAction asChild>
+              <DeleteTimeBlockAlert title={timeBlock.title} id={timeBlock.id} onDelete={onDeleteTimeBlock} />
+            </AlertDialogAction>
+            <AlertDialogCancel className="w-1/3">Close</AlertDialogCancel>
           </AlertDialogFooter>
         </div>
       </AlertDialogContent>
